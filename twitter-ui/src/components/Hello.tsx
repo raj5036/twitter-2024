@@ -7,7 +7,7 @@ const Hello = async () => {
 
   return (
     <p>
-      👋 {t('hello_message', { email: user?.emailAddresses[0]?.emailAddress })}
+      👋 {t('hello_message1', { email: user?.emailAddresses[0]?.emailAddress })}
     </p>
   );
 };
