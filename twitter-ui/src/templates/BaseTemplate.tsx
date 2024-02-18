@@ -4,7 +4,7 @@ import { type ReactNode } from 'react';
 import { AppConfig } from '@/utils/AppConfig';
 
 const BaseTemplate = (props: {
-  leftNav: ReactNode;
+  leftNav?: ReactNode;
   rightNav?: ReactNode;
   children: ReactNode;
 }) => {
@@ -42,10 +42,11 @@ const BaseTemplate = (props: {
           © Copyright {new Date().getFullYear()} {AppConfig.name}.
           {` ${t('made_with')} `}
           <a
-            href="https://creativedesignsguru.com"
+            href="https://github.com/raj5036"
+            target="_blank"
             className="text-blue-700 hover:border-b-2 hover:border-blue-700"
           >
-            CreativeDesignsGuru
+            Raj
           </a>
           .
           {/*

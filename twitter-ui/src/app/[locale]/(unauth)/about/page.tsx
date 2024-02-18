@@ -19,7 +19,7 @@ export default function About() {
 
   return (
     <>
-      <p>{t('about_paragraph')}</p>
+      <p>Raj Here! {t('about_paragraph')}</p>
 
       <div className="mt-2 text-center text-sm">
         {`${t('translation_powered_by')} `}
