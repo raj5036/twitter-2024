@@ -32,7 +32,7 @@
         "plugin:prettier/recommended"
       ],
       "parserOptions": {
-        "project": "./twitter-ui/tsconfig.json"
+        "project": "./tsconfig.json"
         // "tsconfigRootDir": "__dirname",
         // "sourceType": "module"
 
