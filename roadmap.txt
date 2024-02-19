@@ -7,6 +7,7 @@
 	4. Integrate a Payment gateway for Premium users
 	5. Basic Twitter features
 	6. Dark mode
+	7. Implement Lazy Loading.
 
 
 Memo: 
