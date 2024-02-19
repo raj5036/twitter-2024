@@ -13,6 +13,8 @@
 		"create_account": "Create account",
 		"sign_in": "Sign in",
 		"already_have_account": "Already have an account",
+		"or": "or",
+		"sign_up_google": "Sign up with Google",
 		"by_signing_up": "By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use."
 	},
 	"BaseTemplate": {
