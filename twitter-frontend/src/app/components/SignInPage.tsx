@@ -14,7 +14,7 @@ const SignInPage = () => {
 		  />
 		</div>
 		<div className="h-[100%] w-[50%] text-left">
-		  <h1 className="text-[64px] font-extrabold text-[#E7E9EA]">
+		  <h1 className="text-[64px] font-extrabold text-[#E7E9EA] mx-0 my-[48px]">
 			Happening Now
 		  </h1>
 		  <p className="text-[31px] font-extrabold text-[#E7E9EA]">
@@ -22,6 +22,15 @@ const SignInPage = () => {
 		  </p>
   
 		  {/* Google OAuth */}
+		  <div className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer">
+			<Image
+				src={"/assets/images/google_icon.png"}
+				alt="Google Icon"
+				height={20}
+				width={20}
+			/>
+			<span>Sign up with Google</span>
+		  </div>
 		  <button
 			type="submit"
 			className="min-h-[36px] min-w-[380px] rounded-xl border-twitter-blue bg-twitter-blue font-bold text-white"
@@ -49,7 +58,7 @@ const SignInPage = () => {
 		  <p className="w-[400px] text-[11px] font-[400] text-twitter-grey">
 		  	By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
 		  </p>
-		  <p>Already have an account</p>
+		  <p>Already have an account?</p>
 		  <button
 			type="submit"
 			className="min-h-[36px] min-w-[380px] rounded-xl border-2 border-solid border-twitter-blue bg-black font-bold text-twitter-blue"

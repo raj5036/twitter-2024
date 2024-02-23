@@ -14,11 +14,6 @@ export default function Home() {
       </div>
     )
   } else {
-    return (
-      <div>
-        <SignInPage />
-        <button onClick={() => signIn("google")}>Sign in</button>
-      </div>
-    )
+    return <SignInPage />
   }
 }
