@@ -14,49 +14,56 @@ const SignInPage = () => {
 		  />
 		</div>
 		<div className="h-[100%] w-[50%] text-left">
-		  <h1 className="text-[64px] font-extrabold text-[#E7E9EA] mx-0 my-[48px]">
-			Happening Now
-		  </h1>
-		  <p className="text-[31px] font-extrabold text-[#E7E9EA]">
-			Join today
-		  </p>
+			<h1 className="text-[64px] font-extrabold text-[#E7E9EA] mx-0 my-[48px]">
+				Happening Now
+		  	</h1>
+			<p className="text-[31px] font-extrabold text-[#E7E9EA] mb-[32px]">
+				Join today
+			</p>
   
-		  {/* Google OAuth */}
-		  <div className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer">
-			<Image
-				src={"/assets/images/google_icon.png"}
-				alt="Google Icon"
-				height={20}
-				width={20}
-			/>
-			<span>Sign up with Google</span>
-		  </div>
-		  <button
-			type="submit"
-			className="min-h-[36px] min-w-[380px] rounded-xl border-twitter-blue bg-twitter-blue font-bold text-white"
-			onClick={() => signIn('google')}
-		  >
-			Sign up with Google
-		  </button>
+		  	{/* Google OAuth */}
+		  	<div 
+		  		className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer mb-[15px]"
+				onClick={() => signIn("google")}
+		   	>
+				<Image
+					src={"/assets/images/google_icon.png"}
+					alt="Google Icon"
+					height={20}
+					width={20}
+				/>
+				<span>Sign up with Google</span>
+		  	</div>
   
 		  {/* Todo: Work on Apple OAuth */}
-		  {/* <button
-			type="submit"
-			className="min-h-[36px] min-w-[380px] rounded-xl border-twitter-blue bg-twitter-blue font-bold text-white"
-		  >
-			{t('create_account')}
-		  </button> */}
-		  <div className="mx-0 mb-[20px] mt-[10px] w-[370px] border-b-[1px] border-b-white bg-black text-center leading-[0.1em]">
-			<span className="bg-black px-[10px] py-0 text-white">Or</span>
+		  <div 
+		  		className="text-black font-bold text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer"
+				onClick={() => signIn("apple")}
+		   	>
+				<Image
+					src={"/assets/images/apple-logo.png"}
+					alt="Google Icon"
+					height={20}
+					width={30}
+				/>
+				<span>Sign up with Apple</span>
+		  	</div>
+		  <div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
+			<span className="bg-black px-[10px] py-0 text-white">or</span>
 		  </div>
 		  <button
 			type="submit"
-			className="min-h-[36px] min-w-[380px] rounded-xl border-twitter-blue bg-twitter-blue font-bold text-white"
+			className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
 		  >
 			Create account
 		  </button>
 		  <p className="w-[400px] text-[11px] font-[400] text-twitter-grey">
-		  	By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
+		  	By signing up, you agree to the  
+			<a href="https://twitter.com/en/tos" target="_blank" className="text-twitter-blue"> Terms of Service </a>
+			and 
+			<a href="https://twitter.com/en/privacy" target="_blank" className="text-twitter-blue"> Privacy Policy </a>
+			, including
+			<a href="https://help.twitter.com/en/rules-and-policies/x-cookies" target="_blank" className="text-twitter-blue"> Cookie Use</a>.
 		  </p>
 		  <p>Already have an account?</p>
 		  <button
