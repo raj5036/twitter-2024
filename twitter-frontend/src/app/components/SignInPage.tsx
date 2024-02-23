@@ -35,8 +35,8 @@ const SignInPage = () => {
 				<span>Sign up with Google</span>
 		  	</div>
   
-		  {/* Todo: Work on Apple OAuth */}
-		  <div 
+		  	{/* Todo: Work on Apple OAuth */}
+		  	<div 
 		  		className="text-black font-bold text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer"
 				onClick={() => signIn("apple")}
 		   	>
@@ -47,34 +47,45 @@ const SignInPage = () => {
 					width={30}
 				/>
 				<span>Sign up with Apple</span>
-		  	</div>
-		  <div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
-			<span className="bg-black px-[10px] py-0 text-white">or</span>
-		  </div>
-		  <button
-			type="submit"
-			className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
-		  >
-			Create account
-		  </button>
-		  <p className="w-[400px] text-[11px] font-[400] text-twitter-grey">
-		  	By signing up, you agree to the  
-			<a href="https://twitter.com/en/tos" target="_blank" className="text-twitter-blue"> Terms of Service </a>
-			and 
-			<a href="https://twitter.com/en/privacy" target="_blank" className="text-twitter-blue"> Privacy Policy </a>
-			, including
-			<a href="https://help.twitter.com/en/rules-and-policies/x-cookies" target="_blank" className="text-twitter-blue"> Cookie Use</a>.
-		  </p>
-		  <p>Already have an account?</p>
-		  <button
-			type="submit"
-			className="min-h-[36px] min-w-[380px] rounded-xl border-2 border-solid border-twitter-blue bg-black font-bold text-twitter-blue"
-		  >
-			Sign in
-		  </button>
+			</div>
+			<div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
+				<span className="bg-black px-[10px] py-0 text-white">or</span>
+			</div>
+			<button
+				type="submit"
+				className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
+			>
+				Create account
+			</button>
+			<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
+				By signing up, you agree to the  
+				<ExternalLink textToDisplay="Terms of Service" url="https://twitter.com/en/tos"/>
+				and 
+				<ExternalLink textToDisplay="Privacy Policy" url="https://twitter.com/en/privacy"/>
+				, including
+				<ExternalLink textToDisplay="Cookie Use" url="https://help.twitter.com/en/rules-and-policies/x-cookies"/>
+			</p>
+			<p
+				className="text-twitter-white font-normal mt-[40px] mb-[20px]"
+			>
+				Already have an account?
+			</p>
+			<button
+				type="submit"
+				className="h-[36px] w-[260px] rounded-[28px] border-twitter-grey-2 border-[1px] bg-black font-bold text-twitter-blue mb-[18px]"
+			>
+				Sign in
+			</button>
 		</div>
 	  </div>
 	)
+}
+
+const ExternalLink = ({textToDisplay, url}: {
+	textToDisplay: string,
+	url: string
+}) => {
+	return <a href={url} target="_blank" className="text-twitter-blue">{" "}{textToDisplay}{" "}</a>
 }
 
 export default SignInPage

@@ -15,8 +15,10 @@ const config: Config = {
       },
       colors: {
         twitter: {
-          blue: '#1D9BF0',
-          grey: 'rgb(113, 118, 123)',
+          "blue": '#1D9BF0',
+          "grey": 'rgb(113, 118, 123)',
+          "grey-2": "rgb(83, 100, 113)", 
+          "white": 'rgb(231, 233, 234)'
         },
       }
     },
