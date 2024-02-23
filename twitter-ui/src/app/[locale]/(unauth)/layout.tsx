@@ -1,7 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+'use client';
+
 // import Link from 'next/link';
 import './layout.module.css';
 
 import Image from 'next/image';
+import { signIn, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
 // import LocaleSwitcher from '@/components/LocaleSwitcher';
@@ -9,6 +14,12 @@ import { useTranslations } from 'next-intl';
 
 export default function Layout() {
   const t = useTranslations('login');
+  const { data: session } = useSession();
+
+  if (session && session.user) {
+    console.log('userSession', session.user);
+    return <h1>User already signed In</h1>;
+  }
 
   return (
     <div className="flex h-[100vh] flex-row flex-wrap bg-black">
@@ -33,6 +44,7 @@ export default function Layout() {
         <button
           type="submit"
           className="min-h-[36px] min-w-[380px] rounded-xl border-twitter-blue bg-twitter-blue font-bold text-white"
+          onClick={() => signIn('google')}
         >
           {t('sign_up_google')}
         </button>

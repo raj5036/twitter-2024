@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';

@@ -8,6 +8,7 @@
 	5. Basic Twitter features
 	6. Dark mode
 	7. Implement Lazy Loading.
+	8. Try integrating D3.js somehow.
 
 
 Memo: 
