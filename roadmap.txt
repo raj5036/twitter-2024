@@ -1,7 +1,7 @@
 1. Make Twitter Clone.
 2. TechStack: NextJs, Golang (For CRUD op), Socket.io (Nodejs for Chat feature), MongoDB (for database).
 3. Features to implement: 
-	1. Implement SSO (Single Sign on)
+	1. Implement SSO (Single Sign on) [Done - Added Google SSO, will Add GitHub]
 	2. Implement Captcha
 	3. Implement Chat 
 	4. Integrate a Payment gateway for Premium users
