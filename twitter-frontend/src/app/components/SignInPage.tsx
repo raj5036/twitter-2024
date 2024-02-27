@@ -1,7 +1,18 @@
+"use client"
+
 import { signIn } from "next-auth/react"
+
 import Image from "next/image"
+import { useState } from "react"
+import Modal from "./Modal"
 
 const SignInPage = () => {
+	const [createAccountModalOpen, setCreateAccountModal] = useState<boolean>(false);
+	const openCreateAccountModal = () => {
+		console.log("openCreateAccountModal")
+		setCreateAccountModal(true);
+	}
+
 	return (
 		<div className="flex h-[100vh] flex-row flex-wrap bg-black">
 		<div className="h-[100%] w-[50%]">
@@ -54,6 +65,7 @@ const SignInPage = () => {
 			<button
 				type="submit"
 				className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
+				onClick={openCreateAccountModal}
 			>
 				Create account
 			</button>
@@ -77,6 +89,17 @@ const SignInPage = () => {
 				Sign in
 			</button>
 		</div>
+		<Modal
+			isOpen={createAccountModalOpen}
+			onAfterClose={()=> {}}
+			onAfterOpen={()=>{}}
+			onRequestClose={()=>{}}
+			shouldCloseOnOverlayClick={true}
+			width="100px"
+			key={1}
+		>
+			This is a modal
+		</Modal>
 	  </div>
 	)
 }
