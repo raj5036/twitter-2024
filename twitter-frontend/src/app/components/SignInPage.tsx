@@ -8,6 +8,7 @@ import Modal from "./Modal"
 
 const SignInPage = () => {
 	const [createAccountModalOpen, setCreateAccountModal] = useState<boolean>(false);
+	
 	const openCreateAccountModal = () => {
 		console.log("openCreateAccountModal")
 		setCreateAccountModal(true);
@@ -91,14 +92,13 @@ const SignInPage = () => {
 		</div>
 		<Modal
 			isOpen={createAccountModalOpen}
-			onAfterClose={()=> {}}
-			onAfterOpen={()=>{}}
-			onRequestClose={()=>{}}
+			onRequestClose={() => setCreateAccountModal(false)}
 			shouldCloseOnOverlayClick={true}
-			width="100px"
-			key={1}
+			width="10rem"
 		>
-			This is a modal
+			<div>
+				Create account modal content
+			</div>
 		</Modal>
 	  </div>
 	)

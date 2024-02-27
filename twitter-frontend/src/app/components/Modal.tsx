@@ -1,56 +1,32 @@
 "use client"
 
 import React, { Fragment, useState } from 'react'
-import { default as ReactModal } from "react-modal";
+import {default as ReactModal} from 'react-modal';
 
-interface ModalProps {
+interface ModalProps extends React.HTMLAttributes<any>{
 	width: string;
 	shouldCloseOnOverlayClick: boolean;
 	isOpen: boolean;
-	onAfterOpen: () => void;
-	onAfterClose: () => void;
+	onAfterOpen?: () => void;
+	onAfterClose?: () => void;
 	onRequestClose: () => void;
+	children: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
 	isOpen,
-	onAfterOpen,
-	onAfterClose,
 	onRequestClose,
-	shouldCloseOnOverlayClick,
-	width
+	children
 }) => {
-	// https://reactcommunity.org/react-modal/styles/
-	const modalStyles = {
-		overlay: {
-			backgroundColor: "rgba(0, 0, 0, 0.75)",
-		},
-		content: {
-			top: "50%",
-			left: "50%",
-			right: "auto",
-			bottom: "auto",
-			marginRight: "-50%",
-			transform: "translate(-50%, -50%)",
-			width: width || "auto",
-			maxWidth: "900px",
-			overflow: "unset",
-		},
-	};
-
+	if (!isOpen) return null;
 	return (
 		<Fragment>
-			<ReactModal
-				isOpen={isOpen}
-				onAfterOpen={onAfterOpen}
-				onAfterClose={onAfterClose}
-				onRequestClose={onRequestClose}
-				style={modalStyles}
-				shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
-				ariaHideApp={false}
-			>
-				This is a sample Modal
-			</ReactModal>
+			{children}
+			<div>
+				<button onClick={onRequestClose}>
+					Close
+				</button>
+			</div>
 		</Fragment>
 	)
 }
