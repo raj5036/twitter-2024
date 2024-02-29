@@ -10,12 +10,11 @@ const SignInPage = () => {
 	const [createAccountModalOpen, setCreateAccountModal] = useState<boolean>(false);
 	
 	const openCreateAccountModal = () => {
-		console.log("openCreateAccountModal")
 		setCreateAccountModal(true);
 	}
 
 	return (
-		<div className="flex h-[100vh] flex-row flex-wrap bg-black">
+		<div className="flex flex-row flex-wrap bg-black">
 		<div className="h-[100%] w-[50%]">
 		  <Image
 			src="/assets/images/twitter-x-logo.png"
@@ -79,7 +78,7 @@ const SignInPage = () => {
 				<ExternalLink textToDisplay="Cookie Use" url="https://help.twitter.com/en/rules-and-policies/x-cookies"/>
 			</p>
 			<p
-				className="text-twitter-white font-normal mt-[40px] mb-[20px]"
+				className="text-white font-bold mt-[40px] mb-[20px]"
 			>
 				Already have an account?
 			</p>

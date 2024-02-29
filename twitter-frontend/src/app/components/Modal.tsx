@@ -1,7 +1,6 @@
 "use client"
 
 import React, { Fragment, useState } from 'react'
-import {default as ReactModal} from 'react-modal';
 
 interface ModalProps extends React.HTMLAttributes<any>{
 	width: string;
