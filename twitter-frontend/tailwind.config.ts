@@ -24,6 +24,7 @@ const config = {
         ring: "hsl(var(--ring))",
         foreground: "hsl(var(--foreground))",
         background: "hsl(var(--background))",
+        "twitter-foreground": "var(--twitter-foreground)",
         "twitter-blue": "var(--twitter-blue)",
         "twitter-grey": "var(--twitter-grey)",
         primary: {

@@ -4,13 +4,50 @@ import { signIn } from "next-auth/react"
 
 import Image from "next/image"
 import { useState } from "react"
-import Modal from "./Modal"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+  } from "@/components/ui/dialog"
+  import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+  } from "@/components/ui/form"
+  
+import { Input } from "@/components/ui/input"
+import {z} from 'zod'
+import { Button } from "@/components/ui/button"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const SignInPage = () => {
-	const [createAccountModalOpen, setCreateAccountModal] = useState<boolean>(false);
-	
-	const openCreateAccountModal = () => {
-		setCreateAccountModal(true);
+	const formSchema = z.object({
+		name: z.string().min(2, {
+			message: "Name must be at least 2 characters.",
+		}),
+		phone: z.string().min(10, {
+			message: "Phone Number must have 10 digits"
+		})
+	})
+
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			name: '',
+			phone: ''
+		},
+	})
+
+	const onSubmit = () => {
+		console.log("onSubmit")
 	}
 
 	return (
@@ -62,13 +99,69 @@ const SignInPage = () => {
 			<div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
 				<span className="bg-black px-[10px] py-0 text-white">or</span>
 			</div>
-			<button
-				type="submit"
-				className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
-				onClick={openCreateAccountModal}
-			>
-				Create account
-			</button>
+			<Dialog>
+				<DialogTrigger>
+					<button
+						type="submit"
+						className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
+					>
+						Create account
+					</button>
+				</DialogTrigger>
+				<DialogContent className="bg-black text-white">
+				<DialogHeader>
+				<DialogTitle>
+					<Image
+						src="/assets/images/twitter-x-logo.png"
+						alt="twitter svg"
+						width={32}
+						height={32}
+						className="m-auto"
+					/>
+				</DialogTitle>
+				<DialogDescription>
+					<h1 className="text-3xl text-twitter-foreground">Create your account</h1>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+						<FormField
+							control={form.control}
+							name="name"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Name</FormLabel>
+									<FormControl>
+										<Input placeholder="Name" {...field} />
+									</FormControl>
+									<FormDescription>
+										This is your public display name.
+									</FormDescription>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="phone"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Phone</FormLabel>
+									<FormControl>
+										<Input placeholder="Phone" {...field} />
+									</FormControl>
+									<FormDescription>
+										This is your public display Phone Number
+									</FormDescription>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button type="submit">Submit</Button>
+					</form>
+					</Form>
+				</DialogDescription>
+				</DialogHeader>
+			</DialogContent>
+			</Dialog>
 			<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
 				By signing up, you agree to the  
 				<ExternalLink textToDisplay="Terms of Service" url="https://twitter.com/en/tos"/>
@@ -89,16 +182,6 @@ const SignInPage = () => {
 				Sign in
 			</button>
 		</div>
-		<Modal
-			isOpen={createAccountModalOpen}
-			onRequestClose={() => setCreateAccountModal(false)}
-			shouldCloseOnOverlayClick={true}
-			width="10rem"
-		>
-			<div>
-				Create account modal content
-			</div>
-		</Modal>
 	  </div>
 	)
 }
