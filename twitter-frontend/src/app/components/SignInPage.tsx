@@ -1,6 +1,7 @@
 "use client"
 
 import { signIn } from "next-auth/react"
+// import styles from './SignInPage.module.css';
 
 import Image from "next/image"
 import { useState } from "react"
@@ -21,8 +22,8 @@ import {
 	FormLabel,
 	FormMessage,
   } from "@/components/ui/form"
-  
-import { Input } from "@/components/ui/input"
+  import { FloatingLabelInput } from '@/components/ui/floating-label-input';
+
 import {z} from 'zod'
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
@@ -128,13 +129,12 @@ const SignInPage = () => {
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Name</FormLabel>
-									<FormControl>
-										<Input placeholder="Name" {...field} />
-									</FormControl>
-									<FormDescription>
-										This is your public display name.
-									</FormDescription>
+									<FloatingLabelInput 
+										id="floating-demo"
+										label="Name" 
+										className="text-white bg-black p-[10px]"
+										{...field}
+									/>
 									<FormMessage />
 								</FormItem>
 							)}
@@ -144,13 +144,12 @@ const SignInPage = () => {
 							name="phone"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Phone</FormLabel>
-									<FormControl>
-										<Input placeholder="Phone" {...field} />
-									</FormControl>
-									<FormDescription>
-										This is your public display Phone Number
-									</FormDescription>
+									<FloatingLabelInput 
+										id="floating-demo"
+										label="Phone" 
+										className="text-white bg-black p-[10px]"
+										{...field}
+									/>
 									<FormMessage />
 								</FormItem>
 							)}
