@@ -121,7 +121,7 @@ const SignInPage = () => {
 					/>
 				</DialogTitle>
 				<DialogDescription>
-					<h1 className="text-3xl text-twitter-foreground">Create your account</h1>
+					<h1 className="text-3xl text-twitter-foreground my-[20px]">Create your account</h1>
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 						<FormField
