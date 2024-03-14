@@ -12,7 +12,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-  } from "@/components/ui/dialog"
+} from "@/components/ui/dialog"
   import {
 	Form,
 	FormControl,
@@ -21,8 +21,17 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-  } from "@/components/ui/form"
-  import { FloatingLabelInput } from '@/components/ui/floating-label-input';
+} from "@/components/ui/form"
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select"
+import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 
 import {z} from 'zod'
 import { Button } from "@/components/ui/button"
@@ -109,8 +118,7 @@ const SignInPage = () => {
 						Create account
 					</button>
 				</DialogTrigger>
-				<CreateAccountDialogContent form={form} onSubmit={onSubmit}
-				/>
+				<CreateAccountDialogContent form={form} onSubmit={onSubmit} />
 			</Dialog>
 			<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
 				By signing up, you agree to the  
@@ -143,11 +151,36 @@ const ExternalLink = ({textToDisplay, url}: {
 	return <a href={url} target="_blank" className="text-twitter-blue">{" "}{textToDisplay}{" "}</a>
 }
 
+const SelectScrollable = ({placeholder, selectWidth, options}: {
+	placeholder: string,
+	selectWidth: string,
+	options: Array<string>
+}) => (
+	<Select>
+      <SelectTrigger className={"bg-black text-twitter-foreground mx-[20px] w-[" + selectWidth + "]"}>
+        <SelectValue placeholder={placeholder}/>
+      </SelectTrigger>
+      <SelectContent className="bg-black text-twitter-foreground">
+		{options.map((option, index) => <SelectItem key={index} value={option}>{option}</SelectItem>)}
+		
+      </SelectContent>
+    </Select>
+)
+
 const CreateAccountDialogContent = ({form, onSubmit}: {
 	form: any,
 	onSubmit: Function
-}) => (
-	<DialogContent className="bg-black text-white">
+}) => {
+	const [month, setMonth] = useState<string>('');
+	const [date, setDate] = useState<string>('');
+	const [year, setYear] = useState<string>('');
+
+	const Months = Array.from({ length: 12 }).map((_, index) => {
+		const monthName = new Date(2000, index).toLocaleDateString('en-US', { month: 'long' });
+		return monthName;
+	})
+
+	return <DialogContent className="bg-black text-white">
 		<DialogHeader>
 			<DialogTitle>
 				<Image
@@ -200,6 +233,11 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 							This will not be shown publicly. Confirm your own age, even if this account is for a business, 
 							a pet, or something else.
 						</p>
+						<div className="flex mt-[20px]">
+							<SelectScrollable placeholder="Month" selectWidth="300px" options={Months}/>
+							<SelectScrollable placeholder="Day" selectWidth="100px" options={[]}/>
+							<SelectScrollable placeholder="Year" selectWidth="150px" options={[]}/>
+						</div>
 					</div>
 					<Button type="submit">Submit</Button>
 				</form>
@@ -207,7 +245,8 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 			</DialogDescription>
 		</DialogHeader>
 	</DialogContent>
-)	
+	
+}	
 
 export default SignInPage
 
