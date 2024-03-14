@@ -109,57 +109,8 @@ const SignInPage = () => {
 						Create account
 					</button>
 				</DialogTrigger>
-				<DialogContent className="bg-black text-white">
-				<DialogHeader>
-				<DialogTitle>
-					<Image
-						src="/assets/images/twitter-x-logo.png"
-						alt="twitter svg"
-						width={32}
-						height={32}
-						className="m-auto"
-					/>
-				</DialogTitle>
-				<DialogDescription>
-					<h1 className="text-3xl text-twitter-foreground my-[20px]">Create your account</h1>
-					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-						<FormField
-							control={form.control}
-							name="name"
-							render={({ field }) => (
-								<FormItem>
-									<FloatingLabelInput 
-										id="floating-demo"
-										label="Name" 
-										className="text-white bg-black p-[10px]"
-										{...field}
-									/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="phone"
-							render={({ field }) => (
-								<FormItem>
-									<FloatingLabelInput 
-										id="floating-demo"
-										label="Phone" 
-										className="text-white bg-black p-[10px]"
-										{...field}
-									/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<Button type="submit">Submit</Button>
-					</form>
-					</Form>
-				</DialogDescription>
-				</DialogHeader>
-			</DialogContent>
+				<CreateAccountDialogContent form={form} onSubmit={onSubmit}
+				/>
 			</Dialog>
 			<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
 				By signing up, you agree to the  
@@ -191,6 +142,72 @@ const ExternalLink = ({textToDisplay, url}: {
 }) => {
 	return <a href={url} target="_blank" className="text-twitter-blue">{" "}{textToDisplay}{" "}</a>
 }
+
+const CreateAccountDialogContent = ({form, onSubmit}: {
+	form: any,
+	onSubmit: Function
+}) => (
+	<DialogContent className="bg-black text-white">
+		<DialogHeader>
+			<DialogTitle>
+				<Image
+					src="/assets/images/twitter-x-logo.png"
+					alt="twitter svg"
+					width={32}
+					height={32}
+					className="m-auto"
+				/>
+			</DialogTitle>
+			<DialogDescription>
+				<h1 className="text-3xl text-twitter-foreground my-[20px]">Create your account</h1>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+					<FormField
+						control={form.control}
+						name="name"
+						render={({ field }) => (
+							<FormItem>
+								<FloatingLabelInput 
+									id="floating-demo"
+									label="Name" 
+									className="text-white bg-black p-[10px]"
+									{...field}
+								/>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="phone"
+						render={({ field }) => (
+							<FormItem>
+								<FloatingLabelInput 
+									id="floating-demo"
+									label="Phone" 
+									className="text-white bg-black p-[10px]"
+									{...field}
+								/>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<div>
+						<h2 className="text-twitter-foreground scroll-m-20 pb-2 text-base font-semibold tracking-tight first:mt-0">
+							Date of Birth
+						</h2>
+						<p className="m-0">
+							This will not be shown publicly. Confirm your own age, even if this account is for a business, 
+							a pet, or something else.
+						</p>
+					</div>
+					<Button type="submit">Submit</Button>
+				</form>
+				</Form>
+			</DialogDescription>
+		</DialogHeader>
+	</DialogContent>
+)	
 
 export default SignInPage
 

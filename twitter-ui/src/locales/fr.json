@@ -1,0 +1,80 @@
+{
+	"RootLayout": {
+		"home_link": "Accueil",
+		"about_link": "A propos",
+		"guestbook_link": "Livre d'or",
+		"portfolio_link": "Portfolio",
+		"sign_in_link": "Se connecter",
+		"sign_up_link": "S'inscrire"
+	},
+	"login": {
+		"happening_now": "Happening now in fr",
+		"join_today": "Join today",
+		"create_account": "Create account",
+		"sign_in": "Sign in",
+		"already_have_account": "Already have an account",
+		"or": "or",
+		"sign_up_google": "Sign up with Google",
+		"by_signing_up": "By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use."
+	},
+	"BaseTemplate": {
+		"description": "Code de démarrage pour Next.js avec Tailwind CSS",
+		"made_with": "Fait avec 💖 by"
+	},
+	"Index": {
+		"meta_title": "X. It's what's happening / X",
+		"meta_description": "Next js Boilerplate est le code de démarrage parfait pour votre projet. Construisez votre application React avec le framework Next.js."
+	},
+	"Guestbook": {
+		"meta_title": "Livre d'or",
+		"meta_description": "Un exemple de fonctionnement CRUD",
+		"database_powered_by": "Base de données propulsée par",
+		"loading_guestbook": "Chargement du livre d'or..."
+	},
+	"GuestbookForm": {
+		"username": "Nom d'utilisateur",
+		"body": "Message",
+		"save": "Sauvegarder"
+	},
+	"About": {
+		"meta_title": "A propos",
+		"meta_description": "A propos description",
+		"about_paragraph": "Bienvenue sur notre page À propos ! Nous sommes une équipe de passionnés et dévoués à la création de logiciels.",
+		"translation_powered_by": "Traduction propulsée par"
+	},
+	"Portfolio": {
+		"meta_title": "Portfolio",
+		"meta_description": "Bienvenue sur la page de mon portfolio !",
+		"presentation": "Bienvenue sur ma page portfolio ! Vous trouverez ici une collection soigneusement organisée de mon travail et de mes réalisations. À travers ce portfolio, je mets en valeur mon expertise, ma créativité et la valeur que je peux apporter à vos projets.",
+		"portfolio_name": "Portfolio {name}",
+		"log_management_powered_by": "Gestion des logs propulsée par"
+	},
+	"PortfolioSlug": {
+		"meta_title": "Portfolio {slug}",
+		"meta_description": "Description du Portfolio {slug}",
+		"header": "Portfolio {slug}",
+		"content": "Créé un ensemble de matériel promotionnel et d'éléments de marquage pour un événement d'entreprise. Conçu un thème visuellement unifié, englobant un logo, des affiches, des bannières et des actifs numériques. Intégrer l'identité de marque du client tout en l'insufflant à une approche contemporaine et innovante. Des réponses favorables de la part des participants ont été obtenues, ce qui a donné lieu à un événement réussi avec un engagement accru des participants et une meilleure visibilité de la marque.",
+		"error_reporting_powered_by": "Rapport d'erreur propulsé par",
+		"coverage_powered_by": "Couverture de code propulsée par"
+	},
+	"SignIn": {
+		"meta_title": "Se connecter",
+		"meta_description": "Connectez-vous à votre compte avec facilité."
+	},
+	"SignUp": {
+		"meta_title": "S'inscrire",
+		"meta_description": "Créez un compte sans effort grâce à notre processus d'inscription intuitif."
+	},
+	"Dashboard": {
+		"meta_title": "Tableau de bord",
+		"hello_message": "Bonjour {email}!"
+	},
+	"UserProfile": {
+		"meta_title": "Profil de l'utilisateur"
+	},
+	"DashboardLayout": {
+		"dashboard_link": "Tableau de bord",
+		"user_profile_link": "Gérer votre compte",
+		"sign_out": "Se déconnecter"
+	}
+}
