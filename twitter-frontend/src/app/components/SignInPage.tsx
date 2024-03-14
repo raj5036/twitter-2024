@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select"
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 
-import {z} from 'zod'
+import {string, z} from 'zod'
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -45,101 +45,107 @@ const SignInPage = () => {
 		}),
 		phone: z.string().min(10, {
 			message: "Phone Number must have 10 digits"
-		})
+		}),
+		month: z.string(),
+		date: z.string(),
+		year: z.string(),
 	})
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: '',
-			phone: ''
+			name: "",
+			phone: "",
+			month: "",
+			date: "",
+			year: "",
 		},
 	})
 
-	const onSubmit = () => {
-		console.log("onSubmit")
+	const onSubmit = async (data: FormData) => {
+		console.log("onSubmit", data)
 	}
 
 	return (
 		<div className="flex flex-row flex-wrap bg-black">
-		<div className="h-[100%] w-[50%]">
-		  <Image
-			src="/assets/images/twitter-x-logo.png"
-			alt="twitter svg"
-			width={400}
-			height={260}
-			className="mx-auto my-[7rem]"
-		  />
-		</div>
-		<div className="h-[100%] w-[50%] text-left">
-			<h1 className="text-[64px] font-extrabold text-[#E7E9EA] mx-0 my-[48px]">
-				Happening Now
-		  	</h1>
-			<p className="text-[31px] font-extrabold text-[#E7E9EA] mb-[32px]">
-				Join today
-			</p>
-  
-		  	{/* Google OAuth */}
-		  	<div 
-		  		className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer mb-[15px]"
-				onClick={() => signIn("google")}
-		   	>
-				<Image
-					src={"/assets/images/google_icon.png"}
-					alt="Google Icon"
-					height={20}
-					width={20}
-				/>
-				<span>Sign up with Google</span>
-		  	</div>
-  
-		  	{/* Todo: Work on Apple OAuth */}
-		  	<div 
-		  		className="text-black font-bold text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer"
-				onClick={() => signIn("apple")}
-		   	>
-				<Image
-					src={"/assets/images/apple-logo.png"}
-					alt="Google Icon"
-					height={20}
-					width={30}
-				/>
-				<span>Sign up with Apple</span>
+			<div className="h-[100%] w-[50%]">
+			<Image
+				src="/assets/images/twitter-x-logo.png"
+				alt="twitter svg"
+				width={400}
+				height={260}
+				className="mx-auto my-[7rem]"
+			/>
 			</div>
-			<div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
-				<span className="bg-black px-[10px] py-0 text-white">or</span>
+			<div className="h-[100%] w-[50%] text-left">
+				<h1 className="text-[64px] font-extrabold text-[#E7E9EA] mx-0 my-[48px]">
+					Happening Now
+				</h1>
+				<p className="text-[31px] font-extrabold text-[#E7E9EA] mb-[32px]">
+					Join today
+				</p>
+	
+				{/* Google OAuth */}
+				<div 
+					className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer mb-[15px]"
+					onClick={() => signIn("google")}
+				>
+					<Image
+						src={"/assets/images/google_icon.png"}
+						alt="Google Icon"
+						height={20}
+						width={20}
+					/>
+					<span>Sign up with Google</span>
+				</div>
+	
+				{/* Todo: Work on Apple OAuth */}
+				<div 
+					className="text-black font-bold text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer"
+					onClick={() => signIn("apple")}
+				>
+					<Image
+						src={"/assets/images/apple-logo.png"}
+						alt="Google Icon"
+						height={20}
+						width={30}
+					/>
+					<span>Sign up with Apple</span>
+				</div>
+				<div className="mx-0 mb-[20px] mt-[30px] w-[255px] border-b-[0.5px] border-b-twitter-grey text-center leading-[0.1em]">
+					<span className="bg-black px-[10px] py-0 text-white">or</span>
+				</div>
+				<Dialog>
+					<DialogTrigger>
+						<button
+							type="submit"
+							className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
+						>
+							Create account
+						</button>
+					</DialogTrigger>
+					<CreateAccountDialogContent form={form} onSubmit={onSubmit} />
+				</Dialog>
+				<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
+					By signing up, you agree to the  
+					<ExternalLink textToDisplay="Terms of Service" url="https://twitter.com/en/tos"/>
+					and 
+					<ExternalLink textToDisplay="Privacy Policy" url="https://twitter.com/en/privacy"/>
+					, including
+					<ExternalLink textToDisplay="Cookie Use" url="https://help.twitter.com/en/rules-and-policies/x-cookies"/>
+				</p>
+				<p
+					className="text-white font-bold mt-[40px] mb-[20px]"
+				>
+					Already have an account?
+				</p>
+				<button
+					type="submit"
+					className="h-[36px] w-[260px] rounded-[28px] border-twitter-grey-2 border-[1px] bg-black font-bold text-twitter-blue mb-[18px]"
+				>
+					Sign in
+				</button>
 			</div>
-			<Dialog>
-				<DialogTrigger>
-					<button
-						type="submit"
-						className="h-[36px] w-[260px] rounded-[28px] border-twitter-blue bg-twitter-blue font-bold text-white mb-[18px]"
-					>
-						Create account
-					</button>
-				</DialogTrigger>
-				<CreateAccountDialogContent form={form} onSubmit={onSubmit} />
-			</Dialog>
-			<p className="w-[400px] text-[11px] font-[400] text-twitter-grey mb-[20px]">
-				By signing up, you agree to the  
-				<ExternalLink textToDisplay="Terms of Service" url="https://twitter.com/en/tos"/>
-				and 
-				<ExternalLink textToDisplay="Privacy Policy" url="https://twitter.com/en/privacy"/>
-				, including
-				<ExternalLink textToDisplay="Cookie Use" url="https://help.twitter.com/en/rules-and-policies/x-cookies"/>
-			</p>
-			<p
-				className="text-white font-bold mt-[40px] mb-[20px]"
-			>
-				Already have an account?
-			</p>
-			<button
-				type="submit"
-				className="h-[36px] w-[260px] rounded-[28px] border-twitter-grey-2 border-[1px] bg-black font-bold text-twitter-blue mb-[18px]"
-			>
-				Sign in
-			</button>
-		</div>
 	  </div>
 	)
 }
@@ -151,21 +157,24 @@ const ExternalLink = ({textToDisplay, url}: {
 	return <a href={url} target="_blank" className="text-twitter-blue">{" "}{textToDisplay}{" "}</a>
 }
 
-const SelectScrollable = ({placeholder, selectWidth, options}: {
+const SelectScrollable = ({placeholder, selectWidth, options, form, field}: {
 	placeholder: string,
 	selectWidth: string,
 	options: Array<string>
-}) => (
-	<Select>
-      <SelectTrigger className={"bg-black text-twitter-foreground mx-[20px] w-[" + selectWidth + "]"}>
-        <SelectValue placeholder={placeholder}/>
-      </SelectTrigger>
-      <SelectContent className="bg-black text-twitter-foreground">
-		{options.map((option, index) => <SelectItem key={index} value={option}>{option}</SelectItem>)}
-		
-      </SelectContent>
-    </Select>
-)
+	form: any
+	field: any
+}) => {
+	return (
+		<Select onValueChange={field.onChange} defaultValue={field.value}>
+			<SelectTrigger className={"bg-black text-twitter-foreground mx-[20px] w-[" + selectWidth + "]"}>
+				<SelectValue placeholder={placeholder}/>
+			</SelectTrigger>
+			<SelectContent className="bg-black text-twitter-foreground">
+				{options.map((option, index) => <SelectItem key={index} value={option}>{option}</SelectItem>)}
+			</SelectContent>
+		</Select>
+	)
+}
 
 const CreateAccountDialogContent = ({form, onSubmit}: {
 	form: any,
@@ -179,6 +188,18 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 		const monthName = new Date(2000, index).toLocaleDateString('en-US', { month: 'long' });
 		return monthName;
 	})
+	
+	const getYearsFrom1904 = () => {
+		const currentYear = new Date().getFullYear();
+		const years = [];
+		
+		for (let year = currentYear; year >= 1904; year--) {
+			years.push(String(year));
+		}
+		
+		return years;
+	}
+	const Years = getYearsFrom1904();
 
 	return <DialogContent className="bg-black text-white">
 		<DialogHeader>
@@ -233,11 +254,36 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 							This will not be shown publicly. Confirm your own age, even if this account is for a business, 
 							a pet, or something else.
 						</p>
-						<div className="flex mt-[20px]">
-							<SelectScrollable placeholder="Month" selectWidth="300px" options={Months}/>
-							<SelectScrollable placeholder="Day" selectWidth="100px" options={[]}/>
-							<SelectScrollable placeholder="Year" selectWidth="150px" options={[]}/>
-						</div>
+						<FormField
+							control={form.control}
+							name="month"
+							render={({ field }) => (
+								<FormItem>
+									<SelectScrollable placeholder="Month" selectWidth="300px" options={Months} form={form} field={field}/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="date"
+							render={({ field }) => (
+								<FormItem>
+									<SelectScrollable placeholder="Date" selectWidth="150px" options={Months} form={form} field={field}/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="year"
+							render={({ field }) => (
+								<FormItem>
+									<SelectScrollable placeholder="Year" selectWidth="200px" options={Years} form={form} field={field}/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
 					<Button type="submit">Submit</Button>
 				</form>
