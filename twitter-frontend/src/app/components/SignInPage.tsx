@@ -173,8 +173,8 @@ const SelectScrollable = ({placeholder, selectWidth, options, form, field}: {
 	field: any
 }) => {
 	return (
-		<Select onValueChange={field.onChange} defaultValue={field.value}>
-			<SelectTrigger className={"bg-black text-twitter-foreground mx-[20px] w-[" + selectWidth + "]"}>
+		<Select onValueChange={field.onChange} defaultValue={field.value} key={selectWidth}>
+			<SelectTrigger className={`bg-black text-twitter-foreground w-[${selectWidth}]`}>
 				<SelectValue placeholder={placeholder}/>
 			</SelectTrigger>
 			<SelectContent className="bg-black text-twitter-foreground">
@@ -260,41 +260,40 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 							This will not be shown publicly. Confirm your own age, even if this account is for a business, 
 							a pet, or something else.
 						</p>
-						<FormField
-							control={form.control}
-							name="month"
-							render={({ field }) => (
-								<FormItem>
-									<SelectScrollable placeholder="Month" selectWidth="300px" options={Months} form={form} field={field}/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="date"
-							render={({ field }) => (
-								<FormItem>
-									<SelectScrollable placeholder="Date" selectWidth="150px" options={Dates} form={form} field={field}/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="year"
-							render={({ field }) => (
-								<FormItem>
-									<SelectScrollable placeholder="Year" selectWidth="200px" options={Years} form={form} field={field}/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<div className="flex justify-evenly items-center mt-[2rem]">
+							<FormField
+								control={form.control}
+								name="month"
+								render={({ field }) => (
+									<FormItem>
+										<SelectScrollable placeholder="Month" selectWidth="200px" options={Months} form={form} field={field}/>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="date"
+								render={({ field }) => (
+									<FormItem>
+										<SelectScrollable placeholder="Date" selectWidth="100px" options={Dates} form={form} field={field}/>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="year"
+								render={({ field }) => (
+									<FormItem>
+										<SelectScrollable placeholder="Year" selectWidth="100px" options={Years} form={form} field={field}/>
+									</FormItem>
+								)}
+							/>
+						</div>
 					</div>
 					<div className="flex justify-center items-center mt-[2rem]">
 						<Button 
 							type="submit"
-							className="w-[28rem] bg-white text-twitter-foreground"
+							className="w-[28rem] bg-white text-black"
 						>Submit</Button>
 					</div>
 				</form>
