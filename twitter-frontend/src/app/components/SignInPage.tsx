@@ -4,7 +4,6 @@ import { signIn } from "next-auth/react"
 // import styles from './SignInPage.module.css';
 
 import Image from "next/image"
-import { useState } from "react"
 import {
 	Dialog,
 	DialogContent,
@@ -37,6 +36,7 @@ import {string, z} from 'zod'
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios from 'axios';
 
 const SignInPage = () => {
 	const formSchema = z.object({
@@ -64,6 +64,13 @@ const SignInPage = () => {
 
 	const onSubmit = async (data: FormData) => {
 		console.log("onSubmit", data)
+		axios.post('http://localhost:4000/user/create-account', data)
+			.then(response => {
+				console.log(response)
+			})
+			.catch(error => {
+				console.error("Something went wrong while creating Account", error);
+			})
 	}
 
 	return (
