@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react"
 // import styles from './SignInPage.module.css';
+import { toast } from 'react-toastify';
 
 import Image from "next/image"
 import {
@@ -63,8 +64,14 @@ const SignInPage = () => {
 		},
 	})
 
-	const onSubmit = async (data: FormData) => {
-		console.log("onSubmit", data)
+	const onSubmit = async (data: any) => {
+		console.log("onSubmit", Object.keys(data))
+		console.log("name", data.name);
+		
+		if (!data.name || !data.phone || !data.month || !data.date || !data.year) {
+			toast("All fields are required!")
+			return;
+		}
 		axios.post('http://localhost:4000/user/create-account', data)
 			.then(response => {
 				console.log(response)
@@ -293,7 +300,7 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 					<div className="flex justify-center items-center mt-[2rem]">
 						<Button 
 							type="submit"
-							className="w-[28rem] bg-white text-black"
+							className="w-[28rem] hover:bg-white hover:text-black"
 						>Submit</Button>
 					</div>
 				</form>
