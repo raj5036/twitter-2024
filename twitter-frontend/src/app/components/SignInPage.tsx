@@ -37,6 +37,7 @@ import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from 'axios';
+import { useEffect } from "react"
 
 const SignInPage = () => {
 	const formSchema = z.object({
@@ -290,7 +291,12 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 							)}
 						/>
 					</div>
-					<Button type="submit">Submit</Button>
+					<div className="flex justify-center items-center mt-[2rem]">
+						<Button 
+							type="submit"
+							className="w-[28rem] bg-white text-twitter-foreground"
+						>Submit</Button>
+					</div>
 				</form>
 				</Form>
 			</DialogDescription>
