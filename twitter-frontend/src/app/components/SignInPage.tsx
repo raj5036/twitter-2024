@@ -180,10 +180,6 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 	form: any,
 	onSubmit: Function
 }) => {
-	const [month, setMonth] = useState<string>('');
-	const [date, setDate] = useState<string>('');
-	const [year, setYear] = useState<string>('');
-
 	const Months = Array.from({ length: 12 }).map((_, index) => {
 		const monthName = new Date(2000, index).toLocaleDateString('en-US', { month: 'long' });
 		return monthName;
@@ -199,7 +195,9 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 		
 		return years;
 	}
-	const Years = getYearsFrom1904();
+
+	const Years = getYearsFrom1904()
+	const Dates = Array.from({length: 31}).map((_, index) => (index + 1).toString())
 
 	return <DialogContent className="bg-black text-white">
 		<DialogHeader>
@@ -269,7 +267,7 @@ const CreateAccountDialogContent = ({form, onSubmit}: {
 							name="date"
 							render={({ field }) => (
 								<FormItem>
-									<SelectScrollable placeholder="Date" selectWidth="150px" options={Months} form={form} field={field}/>
+									<SelectScrollable placeholder="Date" selectWidth="150px" options={Dates} form={form} field={field}/>
 									<FormMessage />
 								</FormItem>
 							)}
