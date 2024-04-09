@@ -6,6 +6,7 @@ type User struct {
 	ID          primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name        string             `json:"name,omitempty"`
 	PhoneNumber string             `json:"phoneNumber,omitempty"`
+	Email       string             `json:"email,omitempty"`
 	DOB         string             `json:"dob,omitempty"`
 	Tweets      any                `json:"tweets,omitempty"`
 	Likes       any                `json:"likes,omitempty"`
