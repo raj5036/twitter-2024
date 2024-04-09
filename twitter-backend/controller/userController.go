@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -37,10 +38,12 @@ func handleErrors(err error) {
 	}
 }
 
-func insertOneUser() {}
+func InsertOneUser(w http.ResponseWriter, r *http.Request) {}
 
-func updateOneUser() {}
+func LoginUser(w http.ResponseWriter, r *http.Request) {}
 
-func getOneUser() {}
+func UpdateOneUser() {}
 
-func deleteOneUser() {}
+func GetOneUser() {}
+
+func DeleteOneUser() {}
