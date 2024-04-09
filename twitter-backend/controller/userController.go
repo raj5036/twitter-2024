@@ -2,10 +2,12 @@ package userController
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/raj5036/twitter-2024/model"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -38,9 +40,25 @@ func handleErrors(err error) {
 	}
 }
 
-func InsertOneUser(w http.ResponseWriter, r *http.Request) {}
+func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencode")
+	w.Header().Set("Allow-Control-Allow-Methods", "POST")
+
+	var user model.User
+	_ = json.NewDecoder(r.Body).Decode(&user)
+
+	InsertOneUser(user)
+	json.NewEncoder(w).Encode(user)
+}
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {}
+
+func InsertOneUser(user model.User) {
+	inserted, err := users.InsertOne(context.Background(), user)
+	handleErrors(err)
+
+	fmt.Println("Inserted 1 movie in db with id: ", inserted.InsertedID)
+}
 
 func UpdateOneUser() {}
 
