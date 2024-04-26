@@ -24,6 +24,7 @@ var users *mongo.Collection
 
 func init() {
 	clientOptions := options.Client().ApplyURI(CONNECTION_STRING)
+
 	//connect to mongodb
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
@@ -39,7 +40,7 @@ func init() {
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencode")
-	w.Header().Set("Allow-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
 
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
@@ -76,7 +77,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/x-www-form-urlencode")
-	w.Header().Set("Allow-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.WriteHeader(200)
 
 	var user model.User
