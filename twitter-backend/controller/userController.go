@@ -39,7 +39,6 @@ func init() {
 }
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/x-www-form-urlencode")
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 
 	var user model.User
@@ -53,20 +52,18 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 		if userWithEmail.Name != "" {
 			fmt.Println("User with same email already exists")
-			w.WriteHeader(409)
-			w.Write([]byte("User with same email already exists"))
+			api.ResponseError(w, "User with same email already exists", 409)
 			return
 		}
 	}
 
 	if user.PhoneNumber != "" {
-		phoneFilter := bson.M{"phonenumber": user.PhoneNumber}
+		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
 		userWithPhone := getOneUser(phoneFilter)
 
 		if userWithPhone.Name != "" {
 			fmt.Println("User with same phone number already exists")
-			w.WriteHeader(409)
-			w.Write([]byte("User with same phone number already exists"))
+			api.ResponseError(w, "User with same phoneNumber already exists", 409)
 			return
 		}
 	}
