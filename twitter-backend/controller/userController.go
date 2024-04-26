@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/raj5036/twitter-2024/api"
 	"github.com/raj5036/twitter-2024/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -50,7 +51,9 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		userWithEmail := getOneUser(emailFilter)
 
 		if userWithEmail.Name != "" {
-			fmt.Println("Users with same email already exists")
+			fmt.Println("User with same email already exists")
+			w.WriteHeader(409)
+			w.Write([]byte("User with same email already exists"))
 			return
 		}
 	}
@@ -60,13 +63,15 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		userWithPhone := getOneUser(phoneFilter)
 
 		if userWithPhone.Name != "" {
-			fmt.Println("Users with same phone number already exists")
+			fmt.Println("User with same phone number already exists")
+			w.WriteHeader(409)
+			w.Write([]byte("User with same phone number already exists"))
 			return
 		}
 	}
 
 	InsertOneUser(user)
-	json.NewEncoder(w).Encode(user)
+	api.ResponseOK(w, user, 200)
 }
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
