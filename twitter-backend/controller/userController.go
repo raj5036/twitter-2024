@@ -8,6 +8,8 @@ import (
 	"net/http"
 
 	"github.com/raj5036/twitter-2024/model"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -34,12 +36,6 @@ func init() {
 	fmt.Println("Collection instance is ready")
 }
 
-func handleErrors(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencode")
 	w.Header().Set("Allow-Control-Allow-Methods", "POST")
@@ -47,11 +43,53 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
 
+	// Check if same Email or PhoneNumber already exists
+	fmt.Printf("user through request %s\n", user)
+	if user.Email != "" {
+		emailFilter := bson.M{"email": user.Email}
+		userWithEmail := getOneUser(emailFilter)
+
+		if userWithEmail.Name != "" {
+			fmt.Println("Users with same email already exists")
+			return
+		}
+	}
+
+	if user.PhoneNumber != "" {
+		phoneFilter := bson.M{"phonenumber": user.PhoneNumber}
+		userWithPhone := getOneUser(phoneFilter)
+
+		if userWithPhone.Name != "" {
+			fmt.Println("Users with same phone number already exists")
+			return
+		}
+	}
+
 	InsertOneUser(user)
 	json.NewEncoder(w).Encode(user)
 }
 
-func LoginUser(w http.ResponseWriter, r *http.Request) {}
+func LoginUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "application/x-www-form-urlencode")
+	w.Header().Set("Allow-Control-Allow-Methods", "POST")
+	w.WriteHeader(200)
+
+	var user model.User
+	_ = json.NewDecoder(r.Body).Decode(&user)
+}
+
+func getOneUser(filter primitive.M) model.User {
+	var user model.User
+	err := users.FindOne(context.Background(), filter).Decode(&user)
+	if err == mongo.ErrNoDocuments {
+		fmt.Println("No documents found with given result")
+		return user
+	} else if err != nil {
+		handleErrors(err)
+	}
+
+	return user
+}
 
 func InsertOneUser(user model.User) {
 	inserted, err := users.InsertOne(context.Background(), user)
@@ -62,6 +100,10 @@ func InsertOneUser(user model.User) {
 
 func UpdateOneUser() {}
 
-func GetOneUser() {}
-
 func DeleteOneUser() {}
+
+func handleErrors(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
