@@ -21,7 +21,7 @@ const DATABASE string = "twitter-project-go"
 const COLLECTION string = "users"
 
 // MOST IMPORTANT
-var users *mongo.Collection
+var Users *mongo.Collection
 
 func init() {
 	clientOptions := options.Client().ApplyURI(CONNECTION_STRING)
@@ -33,7 +33,7 @@ func init() {
 	fmt.Println("MongoDB connection success")
 
 	// Most Important: Assign collection to this Collection Instance
-	users = client.Database(DATABASE).Collection(COLLECTION)
+	Users = client.Database(DATABASE).Collection(COLLECTION)
 
 	//collection instance
 	fmt.Println("Collection instance is ready")
@@ -125,7 +125,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 func getOneUser(filter primitive.M) model.User {
 	var user model.User
-	err := users.FindOne(context.Background(), filter).Decode(&user)
+	err := Users.FindOne(context.Background(), filter).Decode(&user)
 	if err == mongo.ErrNoDocuments {
 		fmt.Println("No documents found with given result")
 		return user
@@ -137,7 +137,7 @@ func getOneUser(filter primitive.M) model.User {
 }
 
 func InsertOneUser(user model.User) {
-	inserted, err := users.InsertOne(context.Background(), user)
+	inserted, err := Users.InsertOne(context.Background(), user)
 	handleErrors(err)
 
 	fmt.Println("Inserted 1 user in db with id: ", inserted.InsertedID)
@@ -150,7 +150,7 @@ func DeleteOneUser() {}
 func DeleteAllUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	deleteResult, err := users.DeleteMany(context.Background(), bson.M{})
+	deleteResult, err := Users.DeleteMany(context.Background(), bson.M{})
 	handleErrors(err)
 	fmt.Println("Deleted all Users, count = ", deleteResult.DeletedCount)
 
