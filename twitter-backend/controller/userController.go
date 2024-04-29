@@ -74,7 +74,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	handleErrors(err)
 	user.Password = hashedPassword
 
-	InsertOneUser(user)
+	insertOneUser(user)
 	api.ResponseOK(w, user, 200)
 }
 
@@ -123,6 +123,17 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func DeleteAllUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	bulkDeleteFilter := bson.M{}
+	deleteResult := deleteManyUser(bulkDeleteFilter)
+	fmt.Println("Deleted all Users, count = ", deleteResult.DeletedCount)
+
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(deleteResult)
+}
+
 func getOneUser(filter primitive.M) model.User {
 	var user model.User
 	err := Users.FindOne(context.Background(), filter).Decode(&user)
@@ -136,26 +147,21 @@ func getOneUser(filter primitive.M) model.User {
 	return user
 }
 
-func InsertOneUser(user model.User) {
+func insertOneUser(user model.User) {
 	inserted, err := Users.InsertOne(context.Background(), user)
 	handleErrors(err)
 
 	fmt.Println("Inserted 1 user in db with id: ", inserted.InsertedID)
 }
 
-func UpdateOneUser() {}
+func updateOneUser() {}
 
-func DeleteOneUser() {}
+func deleteOneUser() {}
 
-func DeleteAllUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	deleteResult, err := Users.DeleteMany(context.Background(), bson.M{})
+func deleteManyUser(filter primitive.M) *mongo.DeleteResult {
+	deleteResult, err := Users.DeleteMany(context.Background(), filter)
 	handleErrors(err)
-	fmt.Println("Deleted all Users, count = ", deleteResult.DeletedCount)
-
-	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(deleteResult)
+	return deleteResult
 }
 
 func handleErrors(err error) {
@@ -171,6 +177,5 @@ func hashPassword(password string) (string, error) {
 
 func comparePassword(hashedPassword string, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-	fmt.Println("err", err)
 	return err == nil
 }
