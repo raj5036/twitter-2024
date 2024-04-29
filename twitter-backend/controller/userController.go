@@ -148,10 +148,14 @@ func UpdateOneUser() {}
 func DeleteOneUser() {}
 
 func DeleteAllUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	deleteResult, err := users.DeleteMany(context.Background(), bson.M{})
 	handleErrors(err)
 	fmt.Println("Deleted all Users, count = ", deleteResult.DeletedCount)
+
 	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(deleteResult)
 }
 
 func handleErrors(err error) {
