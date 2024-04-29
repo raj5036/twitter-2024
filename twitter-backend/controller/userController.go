@@ -13,6 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const CONNECTION_STRING string = "mongodb://localhost:27017"
@@ -68,17 +69,20 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	hashedPassword, err := hashPassword(user.Password)
+	handleErrors(err)
+	user.Password = hashedPassword
+
 	InsertOneUser(user)
 	api.ResponseOK(w, user, 200)
 }
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/x-www-form-urlencode")
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
-	w.WriteHeader(200)
 
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
+
 }
 
 func getOneUser(filter primitive.M) model.User {
@@ -98,7 +102,7 @@ func InsertOneUser(user model.User) {
 	inserted, err := users.InsertOne(context.Background(), user)
 	handleErrors(err)
 
-	fmt.Println("Inserted 1 movie in db with id: ", inserted.InsertedID)
+	fmt.Println("Inserted 1 user in db with id: ", inserted.InsertedID)
 }
 
 func UpdateOneUser() {}
@@ -110,3 +114,10 @@ func handleErrors(err error) {
 		log.Fatal(err)
 	}
 }
+
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+// func comparePassword() {}
