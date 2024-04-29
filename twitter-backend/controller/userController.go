@@ -41,13 +41,14 @@ func init() {
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Content-Type", "application/json")
 
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
 
 	// Check if same Email or PhoneNumber already exists
 	fmt.Printf("user through request %s\n", user)
-	if user.Email != "" {
+	if user.Email != "" { // If user logs in using Email
 		emailFilter := bson.M{"email": user.Email}
 		userWithEmail := getOneUser(emailFilter)
 
@@ -58,7 +59,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if user.PhoneNumber != "" {
+	if user.PhoneNumber != "" { // If user logs in using Phone Number
 		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
 		userWithPhone := getOneUser(phoneFilter)
 
@@ -79,6 +80,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Content-Type", "application/json")
 
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
@@ -92,8 +94,6 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			api.ResponseError(w, "No such Email exists in system", 404)
 			return
 		}
-		fmt.Println("pwd-req", user.Password)
-		fmt.Println("pwd-db", userWithEmail.Password)
 		passwordMatch := comparePassword(userWithEmail.Password, user.Password)
 		if !passwordMatch {
 			fmt.Println("Incorrect password")
