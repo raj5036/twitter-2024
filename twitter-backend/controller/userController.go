@@ -83,6 +83,44 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var user model.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
 
+	if user.Email != "" {
+		emailFilter := bson.M{"email": user.Email}
+		userWithEmail := getOneUser(emailFilter)
+
+		if userWithEmail.Name == "" {
+			fmt.Println("No such Email exists in system")
+			api.ResponseError(w, "No such Email exists in system", 404)
+			return
+		}
+		fmt.Println("pwd-req", user.Password)
+		fmt.Println("pwd-db", userWithEmail.Password)
+		passwordMatch := comparePassword(userWithEmail.Password, user.Password)
+		if !passwordMatch {
+			fmt.Println("Incorrect password")
+			api.ResponseError(w, "Incorrect email / password combination", 400)
+			return
+		}
+
+		api.ResponseOK(w, user, 200)
+	} else if user.PhoneNumber != "" {
+		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
+		userWithPhone := getOneUser(phoneFilter)
+
+		if userWithPhone.Name == "" {
+			fmt.Println("No such PhoneNumber exists in system")
+			api.ResponseError(w, "No such PhoneNumber exists in system", 404)
+			return
+		}
+
+		passwordMatch := comparePassword(userWithPhone.Password, user.Password)
+		if !passwordMatch {
+			fmt.Println("Incorrect password")
+			api.ResponseError(w, "Incorrect phoneNumber / password combination", 400)
+			return
+		}
+
+		api.ResponseOK(w, user, 200)
+	}
 }
 
 func getOneUser(filter primitive.M) model.User {
@@ -109,6 +147,13 @@ func UpdateOneUser() {}
 
 func DeleteOneUser() {}
 
+func DeleteAllUser(w http.ResponseWriter, r *http.Request) {
+	deleteResult, err := users.DeleteMany(context.Background(), bson.M{})
+	handleErrors(err)
+	fmt.Println("Deleted all Users, count = ", deleteResult.DeletedCount)
+	w.WriteHeader(200)
+}
+
 func handleErrors(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -120,4 +165,8 @@ func hashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
-// func comparePassword() {}
+func comparePassword(hashedPassword string, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	fmt.Println("err", err)
+	return err == nil
+}

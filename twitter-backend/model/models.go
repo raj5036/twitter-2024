@@ -7,7 +7,7 @@ type User struct {
 	Name        string             `json:"name,omitempty" bson:"name,omitempty"`
 	PhoneNumber string             `json:"phoneNumber,omitempty" bson:"phoneNumber,omitempty"`
 	Email       string             `json:"email,omitempty" bson:"email,omitempty"`
-	Password    string             `json:"-"`
+	Password    string             `json:"password,omitempty" bson:"password,omitempty"`
 	DOB         string             `json:"dob,omitempty" bson:"dob,omitempty"`
 	Tweets      any                `json:"tweets,omitempty" bson:"tweets,omitempty"`
 	Likes       any                `json:"likes,omitempty" bson:"likes,omitempty"`
