@@ -14,3 +14,11 @@
 Memo: 
 1. Node version: v18.19.1
 2. pnpm version: 8.15.3 [Run 'cmd' as Administrator to get this configuration]
+
+TODO: 
+1. Refactor code for Login API. Break the code using functions if possible.
+2. Add jwt-golang for authorization: https://medium.com/@cheickzida/golang-implementing-jwt-token-authentication-bba9bfd84d60
+3. Middlewares in Golang: https://github.com/karankumarshreds/GoMiddlewares
+4. Research on request body validation on Golang.
+5. Use ENV file to store sensitive information.
+ 

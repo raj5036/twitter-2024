@@ -201,17 +201,3 @@ func createUserToken(user model.User) string {
 
 	return tokenString
 }
-
-func verifyUserToken(tokenString string) error {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return secretKey, nil
-	})
-
-	handleErrors(err)
-
-	if !token.Valid {
-		return fmt.Errorf("invalid token")
-	}
-
-	return nil
-}
