@@ -3,6 +3,7 @@ module github.com/raj5036/twitter-2024
 go 1.18
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/gorilla/mux v1.8.1
 	go.mongodb.org/mongo-driver v1.14.0
 	golang.org/x/crypto v0.22.0

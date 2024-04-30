@@ -9,19 +9,10 @@ import (
 )
 
 func main() {
-	fmt.Println("Twitter Server is running successfully")
+	fmt.Println("Twitter Server is starting....")
 
 	// Setup routers
 	router := router.Router()
 	log.Fatal(http.ListenAndServe(":4000", router))
 	fmt.Println("Listening on PORT: 4000...........")
-
-	// Setup MongoDB
-	// password := "P@ssw0rd"
-	// bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
-	// fmt.Println(string(bytes))
-	// hashedPassword := string(bytes)
-
-	// err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-	// fmt.Println(err == nil)
 }

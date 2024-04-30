@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/raj5036/twitter-2024/api"
 	"github.com/raj5036/twitter-2024/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -22,6 +24,7 @@ const COLLECTION string = "users"
 
 // MOST IMPORTANT
 var Users *mongo.Collection
+var secretKey = []byte("secret-key")
 
 func init() {
 	clientOptions := options.Client().ApplyURI(CONNECTION_STRING)
@@ -178,4 +181,30 @@ func hashPassword(password string) (string, error) {
 func comparePassword(hashedPassword string, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	return err == nil
+}
+
+func createUserToken(user model.User) string {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"name": user.Name,
+		"exp":  time.Now().Add(time.Hour * 24).Unix(),
+	})
+
+	tokenString, err := token.SignedString(secretKey)
+	handleErrors(err)
+
+	return tokenString
+}
+
+func verifyUserToken(tokenString string) error {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+
+	handleErrors(err)
+
+	if !token.Valid {
+		return fmt.Errorf("invalid token")
+	}
+
+	return nil
 }
