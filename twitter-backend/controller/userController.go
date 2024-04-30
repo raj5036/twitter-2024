@@ -1,4 +1,4 @@
-package userController
+package controller
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/raj5036/twitter-2024/api"
 	"github.com/raj5036/twitter-2024/model"
+	"github.com/raj5036/twitter-2024/response"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -62,7 +63,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if user.PhoneNumber != "" { // If user logs in using Phone Number
+	if user.PhoneNumber != "" { // If user registers using Phone Number
 		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
 		userWithPhone := getOneUser(phoneFilter)
 
@@ -104,7 +105,10 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		api.ResponseOK(w, user, http.StatusOK)
+		tokenString := createUserToken(userWithEmail)
+		data := response.LoginResponse{Token: tokenString}
+
+		api.ResponseOK(w, data, http.StatusOK)
 	} else if user.PhoneNumber != "" {
 		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
 		userWithPhone := getOneUser(phoneFilter)
@@ -122,7 +126,10 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		api.ResponseOK(w, user, http.StatusOK)
+		tokenString := createUserToken(userWithPhone)
+		data := response.LoginResponse{Token: tokenString}
+
+		api.ResponseOK(w, data, http.StatusOK)
 	}
 }
 
@@ -157,9 +164,9 @@ func insertOneUser(user model.User) {
 	fmt.Println("Inserted 1 user in db with id: ", inserted.InsertedID)
 }
 
-func updateOneUser() {}
+// func updateOneUser() {}
 
-func deleteOneUser() {}
+// func deleteOneUser() {}
 
 func deleteManyUser(filter primitive.M) *mongo.DeleteResult {
 	deleteResult, err := Users.DeleteMany(context.Background(), filter)
