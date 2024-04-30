@@ -57,7 +57,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 		if userWithEmail.Name != "" {
 			fmt.Println("User with same email already exists")
-			api.ResponseError(w, "User with same email already exists", 409)
+			api.ResponseError(w, "User with same email already exists", http.StatusConflict)
 			return
 		}
 	}
@@ -68,7 +68,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 		if userWithPhone.Name != "" {
 			fmt.Println("User with same phone number already exists")
-			api.ResponseError(w, "User with same phoneNumber already exists", 409)
+			api.ResponseError(w, "User with same phoneNumber already exists", http.StatusConflict)
 			return
 		}
 	}
@@ -78,7 +78,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	user.Password = hashedPassword
 
 	insertOneUser(user)
-	api.ResponseOK(w, user, 200)
+	api.ResponseOK(w, user, http.StatusCreated)
 }
 
 func LoginUser(w http.ResponseWriter, r *http.Request) {
@@ -100,11 +100,11 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		passwordMatch := comparePassword(userWithEmail.Password, user.Password)
 		if !passwordMatch {
 			fmt.Println("Incorrect password")
-			api.ResponseError(w, "Incorrect email / password combination", 400)
+			api.ResponseError(w, "Incorrect email / password combination", http.StatusBadRequest)
 			return
 		}
 
-		api.ResponseOK(w, user, 200)
+		api.ResponseOK(w, user, http.StatusOK)
 	} else if user.PhoneNumber != "" {
 		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
 		userWithPhone := getOneUser(phoneFilter)
@@ -118,11 +118,11 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		passwordMatch := comparePassword(userWithPhone.Password, user.Password)
 		if !passwordMatch {
 			fmt.Println("Incorrect password")
-			api.ResponseError(w, "Incorrect phoneNumber / password combination", 400)
+			api.ResponseError(w, "Incorrect phoneNumber / password combination", http.StatusBadRequest)
 			return
 		}
 
-		api.ResponseOK(w, user, 200)
+		api.ResponseOK(w, user, http.StatusOK)
 	}
 }
 
