@@ -2,20 +2,17 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import SignInPage from "./components/SignInPage";
+import { redirect } from "next/navigation";
+import { getUser } from "@/lib/TwitterClient";
 
 export default function Home() {
-  const {data: session} = useSession();
+  const {data: session} = useSession()
   if (session && session.user) {
-    /*
-      This if statement might be unnecessary. Check if it can be removed.
-    */
+    // Session user does not exist in Database, then show DOB Modal, save their data & Then redirect to HomePage
+    // Session user exists in Database, then redirect to HomePage
     console.log(session.user)
-    return (
-      <div>
-        {`User is logged In. Lets show Twitter's feed`}
-        <button onClick={() => signOut()}>Sign out</button>
-      </div>
-    )
+    console.log(getUser({email: session.user.email}))
+    // redirect('/home')
   } else {
     return <SignInPage />
   }

@@ -66,9 +66,7 @@ const SignInPage = () => {
 	})
 
 	const onGoogleSignIn = () => {
-		signIn("google", {
-			callbackUrl: SignInCallbackUrl
-		})
+		signIn("google")
 	}
 
 	const onAppleSignIn = () => {
