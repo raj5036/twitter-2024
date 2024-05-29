@@ -6,6 +6,9 @@ import SignInPage from "./components/SignInPage";
 export default function Home() {
   const {data: session} = useSession();
   if (session && session.user) {
+    /*
+      This if statement might be unnecessary. Check if it can be removed.
+    */
     console.log(session.user)
     return (
       <div>

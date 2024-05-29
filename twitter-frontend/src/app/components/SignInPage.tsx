@@ -41,6 +41,7 @@ import axios from 'axios';
 import { useEffect } from "react"
 
 const SignInPage = () => {
+	const SignInCallbackUrl = '/home'
 	const formSchema = z.object({
 		name: z.string().min(2, {
 			message: "Name must be at least 2 characters.",
@@ -65,11 +66,15 @@ const SignInPage = () => {
 	})
 
 	const onGoogleSignIn = () => {
-		signIn("google")
+		signIn("google", {
+			callbackUrl: SignInCallbackUrl
+		})
 	}
 
 	const onAppleSignIn = () => {
-		signIn("apple")
+		signIn("apple", {
+			callbackUrl: SignInCallbackUrl
+		})
 	}
 
 	const onSubmit = async (data: any) => {
