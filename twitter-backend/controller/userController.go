@@ -95,7 +95,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 		if userWithEmail.Name == "" {
 			fmt.Println("No such Email exists in system")
-			api.ResponseError(w, "No such Email exists in system", 404)
+			api.ResponseError(w, "No such Email exists in system", http.StatusBadRequest)
 			return
 		}
 		passwordMatch := comparePassword(userWithEmail.Password, user.Password)
@@ -115,7 +115,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 		if userWithPhone.Name == "" {
 			fmt.Println("No such PhoneNumber exists in system")
-			api.ResponseError(w, "No such PhoneNumber exists in system", 404)
+			api.ResponseError(w, "No such PhoneNumber exists in system", http.StatusBadRequest)
 			return
 		}
 
@@ -131,6 +131,41 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 		api.ResponseOK(w, data, http.StatusOK)
 	}
+}
+
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Content-Type", "application/json")
+
+	var user model.User
+	_ = json.NewDecoder(r.Body).Decode(&user)
+
+	if user.Email != "" {
+		emailFilter := bson.M{"email": user.Email}
+		userWithEmail := getOneUser(emailFilter)
+
+		if userWithEmail.Name == "" {
+			fmt.Println("No such Email exists.")
+			api.ResponseError(w, "No such Email exists in system", http.StatusBadRequest)
+			return
+		}
+
+		api.ResponseOK(w, userWithEmail, http.StatusOK)
+	} else if user.PhoneNumber != "" {
+		phoneFilter := bson.M{"phoneNumber": user.PhoneNumber}
+		userWithPhone := getOneUser(phoneFilter)
+
+		if userWithPhone.Name == "" {
+			fmt.Println("No such phoneNumber exists.")
+			api.ResponseError(w, "No such Phone Number exists", http.StatusBadRequest)
+			return
+		}
+
+		api.ResponseOK(w, userWithPhone, http.StatusOK)
+	} else {
+		api.ResponseError(w, "Request must contain Email or PhoneNumber", http.StatusBadRequest)
+	}
+
 }
 
 func DeleteAllUser(w http.ResponseWriter, r *http.Request) {

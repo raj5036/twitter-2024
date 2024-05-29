@@ -13,6 +13,7 @@ func Router() *mux.Router {
 	// User Routes
 	router.HandleFunc("/user/registration", controller.RegisterUser).Methods(http.MethodPost)
 	router.HandleFunc("/user/login", controller.LoginUser).Methods(http.MethodPost)
+	router.HandleFunc("/user/get", controller.GetUser).Methods(http.MethodGet)
 	router.HandleFunc("/user/delete-all", controller.DeleteAllUser).Methods(http.MethodDelete)
 
 	// Tweet routes
