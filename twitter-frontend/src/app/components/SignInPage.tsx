@@ -64,6 +64,14 @@ const SignInPage = () => {
 		},
 	})
 
+	const onGoogleSignIn = () => {
+		signIn("google")
+	}
+
+	const onAppleSignIn = () => {
+		signIn("apple")
+	}
+
 	const onSubmit = async (data: any) => {
 		console.log("onSubmit", Object.keys(data))
 		console.log("name", data.name);
@@ -103,7 +111,7 @@ const SignInPage = () => {
 				{/* Google OAuth */}
 				<div 
 					className="text-black font-medium text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer mb-[15px]"
-					onClick={() => signIn("google")}
+					onClick={onGoogleSignIn}
 				>
 					<Image
 						src={"/assets/images/google_icon.png"}
@@ -117,7 +125,7 @@ const SignInPage = () => {
 				{/* Todo: Work on Apple OAuth */}
 				<div 
 					className="text-black font-bold text-sm bg-white flex h-[44px] max-w-[232px] py-[13px] px-[35px] rounded-[28px] cursor-pointer"
-					onClick={() => signIn("apple")}
+					onClick={onAppleSignIn}
 				>
 					<Image
 						src={"/assets/images/apple-logo.png"}
